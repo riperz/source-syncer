@@ -1,10 +1,14 @@
 import { Injectable } from '@nestjs/common';
+import { ScrapingHelper } from '../helper/scrapingData';
 
 @Injectable()
 export class ScraperService {
-  constructor() {}
+  scrapingHelper: ScrapingHelper;
+  constructor() {
+    this.scrapingHelper = new ScrapingHelper();
+  }
 
   async scrapeData(url: string): Promise<any> {
-    console.log('ok')
+    this.scrapingHelper.scrap(url);
   }
 }

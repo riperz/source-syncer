@@ -1,3 +1,3 @@
-import { ScraperService } from "./scrapperService";
+import { ScraperService } from './scrapperService';
 
-export {ScraperService}
+export { ScraperService };
