@@ -15,6 +15,14 @@ export class ScrapingHelper {
 
     await this.login(page, 'email@fake.com');
 
+    const expandButtons = await page.$$(
+      '.inline-form.expand-form .expand-button',
+    );
+    for (const button of expandButtons) {
+      await button.click();
+      await this.wait(page, 10000);
+    }
+
     await page.waitForSelector('#subscription-form');
 
     const elements = await page.$$('#subscription-form .picture-container');
@@ -71,5 +79,9 @@ export class ScrapingHelper {
     } catch (error) {
       console.error('Erreur lors de la tentative de connexion:', error);
     }
+  }
+
+  private async wait(page: any, time: number): Promise<void> {
+    await page.waitForTimeout(time);
   }
 }
