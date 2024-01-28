@@ -1,3 +1,3 @@
-import { ScraperController } from "./scrapperController";
+import { ScraperController } from './scrapperController';
 
-export {ScraperController}
+export { ScraperController };

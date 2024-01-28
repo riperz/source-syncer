@@ -4,9 +4,7 @@ export class ScrapingHelper {
   constructor() {}
 
   async scrap(url: string): Promise<any> {
-    const browser = await puppeteer.launch({
-      executablePath: '/bin/google-chrome',
-    });
+    const browser = await puppeteer.launch();
 
     const page = await browser.newPage();
 
@@ -20,39 +18,50 @@ export class ScrapingHelper {
     );
     for (const button of expandButtons) {
       await button.click();
-      await this.wait(page, 10000);
     }
 
-    await page.waitForSelector('#subscription-form');
+    await page.waitForSelector('.row >>> .covers >>> .justify-left');
 
-    const elements = await page.$$('#subscription-form .picture-container');
+    const elements = await page.$$('.row >>> .covers >>> .justify-left');
 
     const data = [];
     for (const element of elements) {
-      const imageUrl = await element.$eval('img', (img) => img.src);
-
-      const mangaDetails = await element.$x(
-        'following-sibling::div[contains(@class, "manga-details")]',
+      const categoryId = await element.evaluate(
+        (el) => el.closest('.justify-left').id,
       );
-      const mangaTitle =
-        mangaDetails.length > 0
-          ? await mangaDetails[0].$eval('h2', (h2) => h2.textContent.trim())
-          : '';
-      const upcomingEpisode =
-        mangaDetails.length > 0
-          ? await mangaDetails[0].$eval('h3', (h3) => h3.textContent.trim())
-          : '';
+      const specificElement = await page.$$(
+        '#subscription-form .picture-container',
+      );
 
-      data.push({
-        imgUrl: imageUrl,
-        title: mangaTitle,
-        upcomingEpisode: upcomingEpisode,
-      });
+      for (const element of specificElement) {
+        const imageUrl = await element.$eval('img', (img) => img.src);
 
-      console.log(data);
+        const mangaDetails = await element.$x(
+          'following-sibling::div[contains(@class, "manga-details")]',
+        );
+        const mangaTitle =
+          mangaDetails.length > 0
+            ? await mangaDetails[0].$eval('h2', (h2) => h2.textContent.trim())
+            : '';
+        const upcomingEpisode =
+          mangaDetails.length > 0
+            ? await mangaDetails[0].$eval('h3', (h3) => h3.textContent.trim())
+            : '';
+
+        data.push({
+          genre: categoryId !== '' ? categoryId : null,
+          imgUrl: imageUrl,
+          title: mangaTitle,
+          upcomingEpisode: upcomingEpisode,
+        });
+
+        console.log(data);
+      }
     }
 
     await browser.close();
+
+    return data;
   }
 
   private async login(page: any, email: string): Promise<void> {
