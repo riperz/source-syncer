@@ -6,6 +6,7 @@ import { CreateWebtoonDto } from './dto/CreateWebtoon.dto';
 
 @Injectable()
 export class WebtoonsService {
+  /* private webtoons: Webtoon[] = []; */
   constructor(
     @InjectModel(Webtoon.name) private webtoonModel: Model<Webtoon>,
   ) {}
@@ -14,4 +15,13 @@ export class WebtoonsService {
     const newWebtoon = new this.webtoonModel(createWebtoonDto);
     return newWebtoon.save();
   }
+
+  async getWebtoons(): Promise<Webtoon[]> {
+    const webtoons = await this.webtoonModel.find().exec;
+    console.log(webtoons);
+    return this.webtoonModel.find().exec();
+  }
+  /*   console.log(this.webtoonModel.find().exec());
+    return await this.webtoonModel.find().exec();
+  } */
 }
