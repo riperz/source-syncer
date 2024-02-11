@@ -11,8 +11,9 @@ export class WebtoonsService {
     @InjectModel(Webtoon.name) private webtoonModel: Model<Webtoon>,
   ) {}
 
-  createWebtoon(createWebtoonDto: CreateWebtoonDto) {
+  async createWebtoon(createWebtoonDto: CreateWebtoonDto): Promise<Webtoon> {
     const newWebtoon = new this.webtoonModel(createWebtoonDto);
+    console.log(newWebtoon);
     return newWebtoon.save();
   }
 

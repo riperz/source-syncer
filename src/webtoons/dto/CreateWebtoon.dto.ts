@@ -1,7 +1,7 @@
 export class CreateWebtoonDto {
   id: number;
   name: string;
-  /* chatpter: number;
+  chatpter: number;
   image: string;
-  genre: string; */
+  genre: string;
 }

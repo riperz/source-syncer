@@ -2,7 +2,6 @@ import { Body, Controller, Get, Post } from '@nestjs/common';
 import { WebtoonsService } from './webtoons.service';
 import { CreateWebtoonDto } from './dto/CreateWebtoon.dto';
 import { Webtoon } from 'src/schemas/Webtoon.schema';
-import e from 'express';
 /* import { Webtoon } from 'src/schemas/Webtoon.schema'; */
 
 @Controller('webtoons')
@@ -18,7 +17,8 @@ export class WebtoonsController {
   }
 
   @Post()
-  createWebtoon(@Body() createWebtoonDto: CreateWebtoonDto) {
+  async createWebtoon(@Body() createWebtoonDto: CreateWebtoonDto) {
     console.log(createWebtoonDto);
+    return this.webtoonService.createWebtoon(createWebtoonDto);
   }
 }
