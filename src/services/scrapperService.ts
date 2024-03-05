@@ -20,7 +20,7 @@ export class ScraperService {
   }
 
   async getBdd(): Promise<any> {
-    const data = this.webtoonController.getWebtoons();
+    const data = this.webtoonController.getAllWebtoonsController();
     console.log(data);
     return data;
   }
