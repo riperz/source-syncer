@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import * as services from './services';
 import * as controllers from './controllers';
-import { WebtoonsModule } from './webtoons/webtoons.module';
+import { WebtoonsModule } from './webtoons.module';
 
 @Module({
   imports: [
@@ -11,5 +11,6 @@ import { WebtoonsModule } from './webtoons/webtoons.module';
   ],
   controllers: [...Object.values(controllers)],
   providers: [...Object.values(services)],
+  exports: [...Object.values(services)],
 })
 export class AppModule {}

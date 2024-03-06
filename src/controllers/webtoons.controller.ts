@@ -7,8 +7,8 @@ import {
   Delete,
   Put,
 } from '@nestjs/common';
-import { WebtoonsService } from './webtoons.service';
-import { CreateWebtoonDto } from './dto/CreateWebtoon.dto';
+import { WebtoonsService } from '../services/webtoons.service';
+import { CreateWebtoonDto } from '../dto/CreateWebtoon.dto';
 import { Webtoon } from 'src/schemas/Webtoon.schema';
 /* import { Webtoon } from 'src/schemas/Webtoon.schema'; */
 
